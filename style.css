@@ -1,70 +1,63 @@
-		div{
-			margin: 43px 43px;
+.create-div{
+			margin: 50px;
+			display: inline-flex;
+			flex-direction: column;
 			position:relative;
-			display:inline-block;
-		}
-		table{
-		border: 1px solid #48AAE6;
-		}
-		table td {
+			}
+.table-root {
+			border: 1px solid #48AAE6;
+			margin: 2px;
+			}
+.button-add {
+			background-color: orange;
+			color: white;
+			font-size: 25px;
 			height: 40px;
 			width: 40px;
-			background-color: #48AAE6;
-
+			border: 0px;
+			position: absolute;
 			}
-		#but_first {
-			background-color: orange;
-			color: white;
-			font-size: 30px;
-			height: 45px;
-			width: 45px;
-			position: absolute;
-			right: -46px;
-			top: 1px;
-			border: 0px;
+.coll-add {
+		  align-self: flex-end;
+		  right: -40px;
+		  top: 4px;
+		  }			
+.row-add {
+		 bottom: -40px;
+		 left: 4px;
+		 }
+.button-delete {
+			   background-color: #B20000;
+			   color: white;
+			   font-size: 25px;
+			   height: 40px;
+			   width: 40px;
+			   border: 0px;
+			   position: absolute;
+			   }
+.coll-delete {
+			 top: -40px;
+			 left: 6px;
+			 }
+.row-delete {
+			left: -40px;
+			top: 6px;
 			}
-		#but_second {
-			background-color: orange;
-			color: white;
-			font-size: 30px;
-			height: 45px;
-			width: 45px;
-			position: absolute;
-			bottom: -46px;
-			border: 0px;
-			}
-		#but_del_top {
-			background-color: #B20000;
-			color: white;
-			font-size: 30px;
-			height: 43px;
-			width: 43px;
-			position: absolute;
-			top: -43px;
-			border: 0px;
-			margin-right: 40px;	
-		}	
-		#but_del_left{
-			background-color: #B20000;
-			color: white;
-			font-size: 30px;
-			height: 43px;
-			width: 43px;
-			position: absolute;
-			left: -43px;
-			top: 0px;
-			border: 0px;
-
-		}
-		.hidden_button{
-			visibility: hidden;
-		}
-		button:hover {
-			cursor: pointer;
-			opacity: 0.5;
-			transition: 1s;
-		}
-		button:not(:hover) {
-  		transition: 1s;
-		}
+.table-root td {
+			   height: 40px;
+			   width: 40px;
+			   background-color: #48AAE6;
+			   padding: 0px;
+			   }
+.button-delete {
+			   visibility: hidden;
+			   }
+button:hover {
+			 cursor: pointer;
+			 opacity: 0.5;
+			 transition: 0.3s;
+			 }
+button:not(:hover) {
+  				   transition: 0.3s;
+		 		   }
 		
