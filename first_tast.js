@@ -1,4 +1,4 @@
-class Task {
+class Square {
 
   constructor(row, coll) {
 
@@ -80,7 +80,6 @@ class Task {
   for (let i = 0; i < this.coll; i++) {
       let cell = document.createElement("td");
       rows.appendChild(cell);
-      //cell.innerHTML = `${j}${i}`
     }
     tblBody.appendChild(rows);
   }
@@ -97,7 +96,7 @@ class Task {
   
   addRows() {
 
-  let trNew = document.querySelectorAll('tr')
+  let trNew = this.table.querySelectorAll('tr')
   let tdList = trNew[0].querySelectorAll('td')
   let tr = document.createElement('tr')
   for (let i = 0; i < tdList.length; i++) {
@@ -108,7 +107,7 @@ class Task {
   }
 
   addCols() {
-  let trNew = document.querySelectorAll("tr")
+  let trNew = this.table.querySelectorAll("tr")
   for (let i = 0; i < trNew.length; i++) {
     let tdNew = document.createElement('td')
     trNew[i].appendChild(tdNew)
@@ -125,7 +124,7 @@ class Task {
 }
 
   delCols() {
-  let trDel = document.querySelectorAll("tr")
+  let trDel = this.table.querySelectorAll("tr")
   let tdCount = trDel[0].querySelectorAll('td')
   if(tdCount.length>1){
   for (let i=0; i < trDel.length; i++)
@@ -162,8 +161,11 @@ class Task {
   }
 }
 
-const square = new Task(3, 3);
+const square = new Square(3, 3);
 square.createTable();
+const second_square = new Square(4,4);
+second_square.createTable();
+
 
 
 
