@@ -20,11 +20,11 @@
 .coll-add {
 		  align-self: flex-end;
 		  right: -40px;
-		  top: 4px;
+		  top: 5px;
 		  }			
 .row-add {
 		 bottom: -40px;
-		 left: 4px;
+		 left: 5px;
 		 }
 .button-delete {
 			   background-color: #B20000;
@@ -60,4 +60,3 @@ button:hover {
 button:not(:hover) {
   				   transition: 0.3s;
 		 		   }
-		

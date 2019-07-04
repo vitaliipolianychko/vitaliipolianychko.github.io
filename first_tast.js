@@ -1,35 +1,102 @@
+class Task {
 
-(function(){
-  let TBL = document.createElement("table");
-  TBL.setAttribute("class", "table-root");
-  const BUTTON_ADD_COLUMN = document.createElement("button");
-  BUTTON_ADD_COLUMN.setAttribute("class", "button-add coll-add")
-  BUTTON_ADD_COLUMN.innerHTML= '+'
+  constructor(row, coll) {
 
-  const BUTTON_ADD_ROW = document.createElement("button");
-  BUTTON_ADD_ROW.setAttribute("class", "button-add row-add cross-axis")
-  BUTTON_ADD_ROW.innerHTML= '+'
+    this.row = row;
+    this.coll = coll;
+    this.current_coll = 0;
+    this.current_row = 0;
+    this.table = document.createElement("table");
+    this.table.setAttribute("class", "table-root");
 
-  const BUTTON_DELETE_ROW = document.createElement("button");
-  BUTTON_DELETE_ROW.setAttribute("class", "button-delete row-delete")
-  BUTTON_DELETE_ROW.innerHTML= '-'
+      
+    this.BUTTON_ADD_COLUMN = document.createElement("button");
+    this.BUTTON_ADD_COLUMN.setAttribute("class", "button-add coll-add")
+    this.BUTTON_ADD_COLUMN.innerHTML= '+'
 
-  const BUTTON_DELETE_COLUMN = document.createElement("button");
-  BUTTON_DELETE_COLUMN.setAttribute("class", "button-delete coll-delete cross-axis")
-  BUTTON_DELETE_COLUMN.innerHTML= '-'
+    this.BUTTON_ADD_ROW = document.createElement("button");
+    this.BUTTON_ADD_ROW.setAttribute("class", "button-add row-add")
+    this.BUTTON_ADD_ROW.innerHTML= '+'
 
-  let changePosition = event =>
-  {
-  if(event.target.nodeName==='TD') {
-    BUTTON_DELETE_COLUMN.style.left=event.target.offsetLeft +3 + 'px'
-    BUTTON_DELETE_ROW.style.top=event.target.offsetTop +3 + 'px'
-    row =event.target.parentNode.rowIndex
-    coll=event.target.cellIndexW
+    this.BUTTON_DELETE_ROW = document.createElement("button");
+    this.BUTTON_DELETE_ROW.setAttribute("class", "button-delete row-delete")
+    this.BUTTON_DELETE_ROW.innerHTML= '-'
+
+    this.BUTTON_DELETE_COLUMN = document.createElement("button");
+    this.BUTTON_DELETE_COLUMN.setAttribute("class", "button-delete coll-delete")
+    this.BUTTON_DELETE_COLUMN.innerHTML= '-'
+
+    this.BUTTON_ADD_ROW.addEventListener('click', () => {
+      this.addRows()
+    });
+
+    this.BUTTON_ADD_COLUMN.addEventListener('click', () => {
+      this.addCols()
+    });
+
+    this.BUTTON_DELETE_ROW.addEventListener('click', () => {
+      this.delRows()
+    });
+
+    this.BUTTON_DELETE_COLUMN.addEventListener('click', () => {
+      this.delCols()
+    });
+
+    this.BUTTON_DELETE_COLUMN.addEventListener('mouseover', () => {
+      this.showButtons()
+    });
+
+    this.BUTTON_DELETE_COLUMN.addEventListener('mouseout', () => {
+      this.hiddenButtons()
+    });
+
+     this.BUTTON_DELETE_ROW.addEventListener('mouseover', () => {
+      this.showButtons()
+    });
+
+    this.BUTTON_DELETE_ROW.addEventListener('mouseout', () => {
+      this.hiddenButtons()
+    });
+
+    this.table.addEventListener('mousemove', () => {
+      this.changePosition()
+    });
+    this.table.addEventListener('mouseover', () => {
+      this.showButtons()
+    });
+    this.table.addEventListener('mouseout', () => {
+      this.hiddenButtons()
+    });
+  }
+  
+  createTable() {
+  
+  let body = document.getElementsByTagName("body")[0];
+  let divV = document.createElement("div")
+  divV.setAttribute("class","create-div")
+  let tblBody = document.createElement("tbody");
+  for (let j = 0; j < this.row; j++) {
+  let rows = document.createElement("tr");
+  for (let i = 0; i < this.coll; i++) {
+      let cell = document.createElement("td");
+      rows.appendChild(cell);
+      //cell.innerHTML = `${j}${i}`
     }
+    tblBody.appendChild(rows);
   }
 
-let addRows = () =>
-{
+  this.table.appendChild(tblBody);
+  divV.appendChild(this.table);
+  body.appendChild(divV);
+  this.table.setAttribute("border", "0")
+  divV.appendChild(this.BUTTON_ADD_COLUMN);
+  divV.appendChild(this.BUTTON_ADD_ROW);
+  divV.appendChild(this.BUTTON_DELETE_COLUMN);
+  divV.appendChild(this.BUTTON_DELETE_ROW);
+   }
+  
+  addRows() {
+
   let trNew = document.querySelectorAll('tr')
   let tdList = trNew[0].querySelectorAll('td')
   let tr = document.createElement('tr')
@@ -37,97 +104,72 @@ let addRows = () =>
     let td = document.createElement('td')
     tr.appendChild(td)
   }
-  TBL.appendChild(tr)
-}
+  this.table.appendChild(tr)
+  }
 
-let addCols = () =>
-{
+  addCols() {
   let trNew = document.querySelectorAll("tr")
   for (let i = 0; i < trNew.length; i++) {
     let tdNew = document.createElement('td')
     trNew[i].appendChild(tdNew)
   }
-}
+  }
 
-let delRows = () => 
-{
+  delRows() {
   let trNew = document.querySelectorAll('tr')
   if (trNew.length > 1)
   {
-  TBL.deleteRow(row)
-}
+  this.table.deleteRow(this.current_row)
+  }
+
 }
 
-let delCols = () => 
-{
+  delCols() {
   let trDel = document.querySelectorAll("tr")
   let tdCount = trDel[0].querySelectorAll('td')
   if(tdCount.length>1){
   for (let i=0; i < trDel.length; i++)
-    trDel[i].deleteCell(coll)
+    trDel[i].deleteCell(this.current_coll)
   }
-}
-let showButtons = () => {
+  }
+
+  hiddenButtons() {
+    this.BUTTON_DELETE_ROW.style.visibility = "hidden"
+    this.BUTTON_DELETE_COLUMN.style.visibility = "hidden"
+  }
+
+  showButtons() {
   let trNew = document.querySelectorAll('tr')
   let tdList = trNew[0].querySelectorAll('td')
   if (trNew.length > 1)
   {
-      BUTTON_DELETE_ROW.style.visibility = "visible"
+      this.BUTTON_DELETE_ROW.style.visibility = "visible"
     }
     if (tdList.length > 1)
     {
-      BUTTON_DELETE_COLUMN.style.visibility = "visible"
+      this.BUTTON_DELETE_COLUMN.style.visibility = "visible"
     }
-   }
-let hiddenButtons = () =>
- {  
-    BUTTON_DELETE_ROW.style.visibility = "hidden"
-    BUTTON_DELETE_COLUMN.style.visibility = "hidden"
-    
-   }
-
-  BUTTON_DELETE_COLUMN.addEventListener("click", delCols);
-  BUTTON_DELETE_ROW.addEventListener("click", delRows);
-  BUTTON_ADD_COLUMN.addEventListener("click", addCols);
-  BUTTON_ADD_ROW.addEventListener("click", addRows);
-  BUTTON_DELETE_COLUMN.addEventListener("mouseover", showButtons);
-  BUTTON_DELETE_COLUMN.addEventListener("mouseout", hiddenButtons);
-  BUTTON_DELETE_ROW.addEventListener("mouseover", showButtons);
-  BUTTON_DELETE_ROW.addEventListener("mouseout", hiddenButtons);
-  TBL.addEventListener("mousemove", changePosition);
-  TBL.addEventListener("mouseover", showButtons);
-  TBL.addEventListener("mouseout",hiddenButtons);
-  let cellText;
-  let row;
-  let coll;
-  
-
-
-  let CreateTable = () => {
-  let body = document.getElementsByTagName("body")[0];
-  let divV = document.createElement("div")
-  divV.setAttribute("class","create-div")
-  let tblBody = document.createElement("tbody");
-  for (let j = 0; j < 3; j++) {
-  row = document.createElement("tr");
-  for (let i = 0; i < 3; i++) {
-      let cell = document.createElement("td");
-      row.appendChild(cell);
-    }
-
-    tblBody.appendChild(row);
   }
 
-  TBL.appendChild(tblBody);
-  divV.appendChild(TBL);
-  body.appendChild(divV);
-  TBL.setAttribute("border", "0");
-  divV.appendChild(BUTTON_ADD_COLUMN);
-  divV.appendChild(BUTTON_ADD_ROW);
-  divV.appendChild(BUTTON_DELETE_COLUMN);
-  divV.appendChild(BUTTON_DELETE_ROW);
-  
-}
-  window.onload = CreateTable
+  changePosition(e) {
 
-})();
+    if (event.target.nodeName==='TD') {
+    this.BUTTON_DELETE_COLUMN.style.left=event.target.offsetLeft +3 + 'px'
+    this.BUTTON_DELETE_ROW.style.top=event.target.offsetTop +3 + 'px'
+    this.current_row = event.target.parentNode.rowIndex
+    this.current_coll = event.target.cellIndex
+    }
+  }
+}
+
+const square = new Task(3, 3);
+square.createTable();
+
+
+
+
+
+
+
+
+
