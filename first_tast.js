@@ -4,10 +4,12 @@ class Square {
     this.coll = coll;
     this.current_coll = 0;
     this.current_row = 0;
-    this.CreateBasicElements();
+    this.trNew = 0;
+    this.tdList = 0;
+    this.createBasicElements();
   }
 
-  CreateBasicElements = () => {
+  createBasicElements = () => {
     this.table = document.createElement('table');
     this.table.setAttribute('class', 'table-root');
 
@@ -41,14 +43,14 @@ class Square {
   };
 
   render = () => {
-    let body = document.getElementsByTagName('body')[0];
+    const body = document.getElementsByTagName('body')[0];
     const container = document.createElement('div');
     container.setAttribute('class', 'root-container');
-    let tblBody = document.createElement('tbody');
+    const tblBody = document.createElement('tbody');
     for (let j = 0; j < this.row; j++) {
-      let rows = document.createElement('tr');
+      const rows = document.createElement('tr');
       for (let i = 0; i < this.coll; i++) {
-        let cell = document.createElement('td');
+        const cell = document.createElement('td');
         rows.appendChild(cell);
       }
       this.table.appendChild(rows);
@@ -64,43 +66,48 @@ class Square {
   };
 
   addRows = () => {
-    let trNew = this.table.querySelectorAll('tr');
-    let tdList = trNew[0].querySelectorAll('td');
-    let tr = document.createElement('tr');
+    const trNew = this.table.querySelectorAll('tr');
+    const tdList = trNew[0].querySelectorAll('td');
+    const tr = document.createElement('tr');
     for (let i = 0; i < tdList.length; i++) {
-      let td = document.createElement('td');
+      const td = document.createElement('td');
       tr.appendChild(td);
     }
     this.table.appendChild(tr);
   };
 
   addCols = () => {
-    let trNew = this.table.querySelectorAll('tr');
+    const trNew = this.table.querySelectorAll('tr');
     for (let i = 0; i < trNew.length; i++) {
-      let tdNew = document.createElement('td');
+      const tdNew = document.createElement('td');
       trNew[i].appendChild(tdNew);
     }
   };
 
-  delRows = () => {
-    let trNew = this.table.querySelectorAll('tr');
-    if (trNew.length > 1) {
+  delRows = event => {
+    this.trNew = this.table.querySelectorAll('tr');
+    if (this.trNew.length > 1) {
       this.table.deleteRow(this.current_row);
     }
-
-    if (trNew.length - 1 === 1) {
+    if (this.trNew.length - 1 === 1) {
       this.button_delete_row.style.visibility = 'hidden';
+    }
+    if (this.current_row === this.trNew.length - 1) {
+      this.button_delete_row.style.top = event.target.offsetTop - 42 + 'px';
     }
   };
 
   delCols = () => {
-    let trDel = this.table.querySelectorAll('tr');
-    let tdCount = trDel[0].querySelectorAll('td');
-    if (tdCount.length > 1) {
-      for (let i = 0; i < trDel.length; i++) trDel[i].deleteCell(this.current_coll);
+    this.trNew = this.table.querySelectorAll('tr');
+    this.tdList = this.trNew[0].querySelectorAll('td');
+    if (this.tdList.length > 1) {
+      for (let i = 0; i < this.trNew.length; i++) this.trNew[i].deleteCell(this.current_coll);
     }
-    if (tdCount.length - 1 === 1) {
+    if (this.tdList.length - 1 === 1) {
       this.button_delete_column.style.visibility = 'hidden';
+    }
+    if (this.current_coll === this.tdList.length - 1) {
+      this.button_delete_column.style.left = event.target.offsetLeft - 42 + 'px';
     }
   };
 
@@ -110,12 +117,11 @@ class Square {
   };
 
   showButtons = event => {
-    let trNew = this.table.querySelectorAll('tr');
-    let tdList = trNew[0].querySelectorAll('td');
+    const trNew = this.table.querySelectorAll('tr');
+    const tdList = trNew[0].querySelectorAll('td');
     if (trNew.length > 1) {
       this.button_delete_row.style.visibility = 'visible';
     }
-
     if (tdList.length > 1) {
       this.button_delete_column.style.visibility = 'visible';
     }
@@ -125,28 +131,12 @@ class Square {
   };
 
   changePosition = event => {
-    let trNew = 0;
-    let tdList = 0;
     if (event.target.nodeName === 'TD') {
       this.button_delete_column.style.left = event.target.offsetLeft + 3 + 'px';
       this.button_delete_row.style.top = event.target.offsetTop + 3 + 'px';
       this.current_row = event.target.parentNode.rowIndex;
       this.current_coll = event.target.cellIndex;
     }
-    this.button_delete_row.addEventListener('click', event => {
-      trNew = this.table.querySelectorAll('tr');
-      console.log(trNew.length - 1);
-      if (this.current_row === trNew.length) {
-        this.button_delete_row.style.top = event.target.offsetTop - 42 + 'px';
-      }
-    });
-    this.button_delete_column.addEventListener('click', event => {
-      trNew = this.table.querySelectorAll('tr');
-      tdList = trNew[0].querySelectorAll('td');
-      if (this.current_coll === tdList.length) {
-        this.button_delete_column.style.left = event.target.offsetLeft - 42 + 'px';
-      }
-    });
   };
 }
 

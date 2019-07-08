@@ -4,10 +4,12 @@
   flex-direction: column;
   position: relative;
 }
+
 .table-root {
   border: 1px solid #48aae6;
   margin: 2px;
 }
+
 .button-add {
   background-color: orange;
   color: white;
@@ -17,15 +19,18 @@
   border: 0px;
   position: absolute;
 }
+
 .coll-add {
   align-self: flex-end;
   right: -40px;
   top: 5px;
 }
+
 .row-add {
   bottom: -40px;
   left: 5px;
 }
+
 .button-delete {
   background-color: #b20000;
   color: white;
@@ -35,28 +40,34 @@
   border: 0px;
   position: absolute;
 }
+
 .coll-delete {
   top: -40px;
   left: 6px;
 }
+
 .row-delete {
   left: -40px;
   top: 6px;
 }
+
 .table-root td {
   height: 40px;
   width: 40px;
   background-color: #48aae6;
   padding: 0px;
 }
+
 .button-delete {
   visibility: hidden;
 }
+
 .root-container button:hover {
   cursor: pointer;
   opacity: 0.5;
   transition: 0.3s;
 }
+
 .root-container button:not(:hover) {
   transition: 0.3s;
 }
